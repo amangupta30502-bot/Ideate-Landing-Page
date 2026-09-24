@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Techfest — An Aetherial Renaissance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0b0906;
+    --surface:#151009;
+    --surface-2:#1c150c;
+    --line: rgba(201,161,90,0.22);
+    --line-strong: rgba(201,161,90,0.4);
+    --gold:#c9a15a;
+    --champagne:#f1dfb0;
+    --parchment:#e9e2d3;
+    --parchment-dim: rgba(233,226,211,0.62);
+    --aether:#8579c4;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Manrope', -apple-system, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+  *{box-sizing:inherit; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--void);
+    color: var(--parchment);
+    font-family: var(--sans);
+    line-height: 1.5;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 22%, rgba(241,223,176,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 78% 14%, rgba(241,223,176,0.35), transparent),
+      radial-gradient(1px 1px at 45% 62%, rgba(241,223,176,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 88% 70%, rgba(241,223,176,0.3), transparent),
+      radial-gradient(1px 1px at 25% 85%, rgba(241,223,176,0.35), transparent),
+      radial-gradient(1px 1px at 60% 38%, rgba(241,223,176,0.28), transparent);
+    background-attachment: fixed;
+  }
+  img{max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,56px);}
+
+  h1,h2,h3{font-family:var(--serif); font-weight:500; letter-spacing:0.01em;}
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding-top: calc(18px + env(safe-area-inset-top,0px));
+    padding-bottom:18px;
+    background: linear-gradient(to bottom, rgba(11,9,6,0.92), rgba(11,9,6,0.55));
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:20px;}
+  .brand{font-family:var(--serif); font-size:1.35rem; color:var(--champagne); letter-spacing:0.02em; text-decoration:none;}
+  .nav-links{display:flex; align-items:center; gap:clamp(18px,3vw,34px); font-size:0.95rem;}
+  .nav-links a{text-decoration:none; color:var(--parchment-dim); transition:color .2s;}
+  .nav-links a:hover{color:var(--champagne);}
+  .btn{
+    display:inline-block; font-family:var(--sans); font-weight:600; font-size:0.92rem;
+    padding:10px 22px; border-radius:2px; text-decoration:none; transition: all .25s ease;
+  }
+  .btn-primary{background:var(--gold); color:var(--void); border:1px solid var(--gold);}
+  .btn-primary:hover{background:var(--champagne); border-color:var(--champagne);}
+  .btn-ghost{border:1px solid var(--line-strong); color:var(--champagne);}
+  .btn-ghost:hover{border-color:var(--gold); background:rgba(201,161,90,0.08);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--champagne); outline-offset:3px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:center;
+    padding-top:110px; overflow:hidden;
+  }
+  .hero-glow{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 55% at 78% 42%, rgba(133,121,196,0.20), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 82% 45%, rgba(201,161,90,0.16), transparent 60%);
+  }
+  .hero-grid{
+    position:relative; z-index:2; width:100%;
+    display:grid; grid-template-columns: 1.1fr 0.9fr; align-items:center; gap:20px;
+  }
+  .hero-copy .kicker{font-size:0.95rem; color:var(--gold); font-family:var(--serif); font-style:italic; margin-bottom:6px;}
+  .hero-copy h1{font-size:clamp(3.2rem,8vw,5.6rem); line-height:0.98; color:var(--parchment);}
+  .hero-copy .theme{
+    display:block; font-family:var(--serif); font-style:italic; font-weight:400;
+    font-size:clamp(1.6rem,3.4vw,2.3rem); color:var(--champagne); margin-top:6px;
+  }
+  .hero-copy p{max-width:52ch; color:var(--parchment-dim); font-size:1.05rem; margin-top:22px;}
+  .hero-actions{display:flex; align-items:center; gap:26px; margin-top:34px; flex-wrap:wrap;}
+  .hero-actions .link{font-size:0.95rem; text-decoration:none; color:var(--parchment-dim); border-bottom:1px solid var(--line-strong); padding-bottom:2px;}
+  .hero-actions .link:hover{color:var(--champagne); border-color:var(--gold);}
+
+  .sphere-wrap{position:relative; z-index:1; display:flex; justify-content:center; align-items:center;}
+  .sphere-wrap svg{width:min(96%,520px); height:auto; overflow:visible;}
+  .sphere-group{transform-box: fill-box; transform-origin: center; animation: spin 130s linear infinite;}
+  .ring{fill:none; stroke:var(--gold); stroke-width:1;}
+  .ring-dim{opacity:0.55;}
+  .star{fill:var(--champagne);}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @media (prefers-reduced-motion: reduce){ .sphere-group{animation:none;} html{scroll-behavior:auto;} }
+
+  /* ---------- Stat band ---------- */
+  .stats{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--surface);}
+  .stats-grid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    padding:44px 0;
+  }
+  .stat{padding:0 22px; border-left:1px solid var(--line);}
+  .stat:first-child{border-left:none;}
+  .stat .num{font-family:var(--serif); font-size:clamp(2rem,3.6vw,2.6rem); color:var(--champagne);}
+  .stat .label{font-size:0.88rem; color:var(--parchment-dim); margin-top:6px;}
+
+  /* ---------- About ---------- */
+  section{padding:clamp(70px,10vw,120px) 0;}
+  .about-grid{display:grid; grid-template-columns: 0.85fr 1.15fr; gap:clamp(30px,6vw,80px);}
+  .about-grid h2{font-size:clamp(1.9rem,3.4vw,2.6rem); color:var(--parchment);}
+  .about-grid .body{color:var(--parchment-dim); font-size:1.08rem; max-width:62ch;}
+  .about-grid .body p + p{margin-top:16px;}
+  .about-grid em{color:var(--champagne); font-style:italic;}
+
+  /* ---------- Pillars (manuscript list) ---------- */
+  .pillars-head{display:flex; align-items:baseline; justify-content:space-between; gap:20px; margin-bottom:26px; flex-wrap:wrap;}
+  .pillars-head h2{font-size:clamp(1.9rem,3.4vw,2.6rem);}
+  .pillars-head p{color:var(--parchment-dim); max-width:38ch;}
+  .pillar-list{border-top:1px solid var(--line);}
+  .pillar{
+    display:grid; grid-template-columns: 260px 1fr; gap:24px;
+    padding:26px 0; border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .pillar h3{font-size:clamp(1.3rem,2vw,1.6rem); color:var(--champagne); font-weight:500;}
+  .pillar p{color:var(--parchment-dim); max-width:56ch; font-size:1rem;}
+
+  /* ---------- Closing CTA ---------- */
+  .closing{
+    position:relative; text-align:left; background:var(--surface-2);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .closing::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(ellipse 55% 80% at 90% 50%, rgba(201,161,90,0.14), transparent 65%);
+  }
+  .closing-inner{position:relative; z-index:1; max-width:640px;}
+  .closing h2{font-size:clamp(2.1rem,4vw,3rem); color:var(--parchment);}
+  .closing p{color:var(--parchment-dim); margin-top:14px; font-size:1.08rem;}
+  .closing .actions{margin-top:30px; display:flex; gap:18px; flex-wrap:wrap;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:50px 0 calc(40px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--line);}
+  .foot-grid{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;}
+  .foot-brand{font-family:var(--serif); font-size:1.2rem; color:var(--champagne);}
+  .foot-meta{color:var(--parchment-dim); font-size:0.88rem; margin-top:6px;}
+  .foot-links{display:flex; gap:22px; font-size:0.92rem;}
+  .foot-links a{text-decoration:none; color:var(--parchment-dim);}
+  .foot-links a:hover{color:var(--champagne);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .sphere-wrap{position:absolute; inset:0; z-index:0; opacity:0.35; margin-top:60px;}
+    .hero-copy{position:relative; z-index:2;}
+    .about-grid{grid-template-columns:1fr;}
+    .stats-grid{grid-template-columns:repeat(2,1fr); row-gap:28px;}
+    .stat:nth-child(3){border-left:none;}
+    .stat:nth-child(2n+1){border-left:none;}
+    .pillar{grid-template-columns:1fr; gap:6px;}
+    .nav-links a:not(.btn){display:none;}
+  }
+  @media (max-width:560px){
+    .hero-actions{gap:16px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="#hero">Techfest</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#pillars">Inside</a>
+      <a class="btn btn-primary" href="#register">Register</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker">30th Edition · IIT Bombay</p>
+      <h1>Techfest<span class="theme">An Aetherial Renaissance</span></h1>
+      <p>Asia's largest science and technology festival returns for its 30th year — three days where telescopes and sculpture, circuitry and ceremony, share the same campus grounds. December 16–18, 2026, Mumbai.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#register">Register for Techfest</a>
+        <a class="link" href="#pillars">See what's inside</a>
+      </div>
+    </div>
+    <div class="sphere-wrap" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <g class="sphere-group">
+          <circle class="ring" cx="200" cy="200" r="168"/>
+          <ellipse class="ring" cx="200" cy="200" rx="168" ry="58"/>
+          <ellipse class="ring ring-dim" cx="200" cy="200" rx="58" ry="168" transform="rotate(18 200 200)"/>
+          <ellipse class="ring ring-dim" cx="200" cy="200" rx="168" ry="104" transform="rotate(-24 200 200)"/>
+          <circle cx="200" cy="200" r="9" fill="#f1dfb0"/>
+          <circle class="star" cx="200" cy="32" r="2.6"/>
+          <circle class="star" cx="200" cy="368" r="2.6"/>
+          <circle class="star" cx="32" cy="200" r="2.2" opacity="0.7"/>
+          <circle class="star" cx="368" cy="200" r="2.2" opacity="0.7"/>
+          <circle class="star" cx="322" cy="98" r="2" opacity="0.8"/>
+          <circle class="star" cx="78" cy="302" r="2" opacity="0.8"/>
+          <circle class="star" cx="86" cy="96" r="1.8" opacity="0.6"/>
+          <circle class="star" cx="314" cy="304" r="1.8" opacity="0.6"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap stats-grid">
+    <div class="stat"><div class="num">1998</div><div class="label">Where it began</div></div>
+    <div class="stat"><div class="num">180,000+</div><div class="label">Visitors, each December</div></div>
+    <div class="stat"><div class="num">3,000+</div><div class="label">Partner colleges worldwide</div></div>
+    <div class="stat"><div class="num">30</div><div class="label">Editions, one legacy</div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <h2>A festival that studies the future</h2>
+    <div class="body">
+      <p>Since 1998, Techfest has given India's students a stage many festivals promise and few deliver: real scientists, real machines, real stakes. What began as a weekend of competitions on the IIT Bombay campus has grown into a three-day convergence, recognised by UNESCO and UNICEF and drawing students from more than fifty countries.</p>
+      <p>This year's theme, <em>An Aetherial Renaissance</em>, treats the festival as both workshop and observatory — a place to build with your hands and look up at the same time.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pillars">
+  <div class="wrap">
+    <div class="pillars-head">
+      <h2>Inside the 30th edition</h2>
+      <p>Six ways to spend three days on campus.</p>
+    </div>
+    <div class="pillar-list">
+      <div class="pillar">
+        <h3>Lectures</h3>
+        <p>Scientists, astronauts, and agency chiefs take the stage — past speakers have included the heads of ISRO and DRDO.</p>
+      </div>
+      <div class="pillar">
+        <h3>Exhibitions</h3>
+        <p>A campus-wide expo of machines usually seen only in headlines: quadruped robots, race-ready EVs, cutting-edge aerospace hardware.</p>
+      </div>
+      <div class="pillar">
+        <h3>Competitions</h3>
+        <p>International Robowars, engineering challenges, and national contests judged by practitioners, not spectators.</p>
+      </div>
+      <div class="pillar">
+        <h3>Workshops</h3>
+        <p>Hands-on sessions in AI, robotics, and deep learning, taught by people building the field right now.</p>
+      </div>
+      <div class="pillar">
+        <h3>Technoholix</h3>
+        <p>When the sun sets, the festival becomes a stage — EDM sets and technological shows under the Mumbai sky.</p>
+      </div>
+      <div class="pillar">
+        <h3>Ozone</h3>
+        <p>International street artists turn the campus itself into the exhibit, live, across all three days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" id="register">
+  <div class="wrap closing-inner">
+    <h2>Be there for the Renaissance</h2>
+    <p>Registration for the 30th edition of Techfest is open. Bring your team, your curiosity, or just yourself.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#register">Register now</a>
+      <a class="btn btn-ghost" href="#about">Read more first</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-brand">Techfest, IIT Bombay</div>
+      <div class="foot-meta">Asia's largest science and technology festival · techfest.org</div>
+    </div>
+    <div class="foot-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#pillars">Inside</a>
+      <a href="#register">Register</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
